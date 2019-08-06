@@ -1,0 +1,127 @@
+openapi: '3.0.2'
+info:
+  title: Api skinali site
+  description: |
+    Все операции с Api происходят через json формат обмена данными
+  version: '1.0,1'
+servers:
+  - url: https://api.server.test/api
+tags:
+  - name: Авторизация
+    description: Контроллер авторизации
+  - name: Админ панель
+    description: Роуты панели администратора
+  - name: Frontend
+    description: Роуты для Frontend
+paths:
+  '/auth/register':
+    post:
+      tags:
+        - Авторизация
+      summary: Регистрация пользователя
+      requestBody:
+        content:
+          json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, example: 'example@mail.ru' } 
+                name: { type: string, example: 'Вася Пупкин' }
+                password: { type: string, example: 'Пароль' }
+                password_confirmation: { type: string, example: 'Подтверждение пароля' }
+      responses:
+        '200':
+          description: OK
+          content:
+            json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object 
+                    properties:
+                      id: { type: integer }
+                      name: { type: string }
+                      second_name: { type: string }
+                      email: { type: string }
+                      email_verified_at: { type: string }
+                      about: { type: string }
+                      role: { type: integer }
+                      active: { type: integer }
+                      status: {type: integer }
+                      properties: { type: object }
+                      created_at: { type: string }
+                      updated_at: { type: string }
+                      deleted_at: { type: string }
+                  access_tooken: { type: string }
+        '422':
+          description: Error
+          content:
+            json:
+              schema:
+                type: object 
+                properties:
+                  message: { type: string, example: Invalid credentials }
+  '/auth/register/':
+    post:
+      tags:
+        - Авторизация
+      summary: Авторизация пользователя 
+      requestBody:
+        content:
+          json:
+            schema:
+              type: object
+              properties:
+                email: { type: string, example: 'example@mail.ru' } 
+                password: { type: string, example: 'password' }
+      responses:
+        '200':
+          description: OK
+          content:
+            json:
+              schema:
+                type: object
+                properties:
+                  user: 
+                    type: object 
+                    properties:
+                      id: { type: integer }
+                      name: { type: string }
+                      second_name: { type: string }
+                      email: { type: string }
+                      email_verified_at: { type: string }
+                      about: { type: string }
+                      role: { type: integer }
+                      active: { type: integer }
+                      status: {type: integer }
+                      properties: { type: object }
+                      created_at: { type: string }
+                      updated_at: { type: string }
+                      deleted_at: { type: string }
+                  access_tooken: { type: string }
+        '422':
+          description: Error
+          content:
+            json:
+              schema:
+                type: object 
+                properties:
+                  message: { type: string, example: Invalid credentials }
+      
+  # Admin controller
+  '/admin/index':
+    get:
+      tags:
+        - Админ панель
+      summary: Dashboard
+      description: Вывод дашборда админа
+      responses:
+        '200':
+          description: OK
+          content:
+            json:
+              schema:
+                type: object
+                properties:
+                  data: { type: object }
