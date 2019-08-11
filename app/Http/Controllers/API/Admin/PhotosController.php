@@ -117,7 +117,7 @@ class PhotosController extends Controller
         $request->validate([
             'name' => 'required',
             'about' => 'required',
-            'photo_path' => 'required',
+            'image_path' => 'required',
             'photo_tags.*' => 'required',
             'photo_category.*' => 'required',
             'keywords' => 'required',
