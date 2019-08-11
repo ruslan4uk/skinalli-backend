@@ -49,13 +49,19 @@ class PhotosController extends Controller
                 ->resize(600, null, function ($constraint) { $constraint->aspectRatio(); } )
                 ->encode('jpg', 90);
 
+        $skinali_lazy = Image::make($request->file('file'))
+                ->resize(20, null, function ($constraint) { $constraint->aspectRatio(); } )
+                ->encode('jpg', 90);
+
         Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali);
         Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_preview.jpg', $skinali_preview);
+        Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_lazy.jpg', $skinali_lazy);
 
         $photo = Photo::where('id', $request->get('id'))->firstOrFail();
 
         $photo->image_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali);
-        $photo->image_preview_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali);
+        $photo->image_preview_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali_preview);
+        $photo->image_lazy = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali_lazy);
         $photo->save();
         return response()->json([
             'success' => true,
