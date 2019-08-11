@@ -24,3 +24,6 @@ Route::post('/auth/logout', 'API\AuthController@logout');
 Route::get('/auth/user', 'API\AuthController@user')->middleware('auth:api');
 
 Route::apiResource('/admin/category', 'API\Admin\CategoryController')->middleware('auth:api');
+Route::apiResource('/admin/tags', 'API\Admin\TagsController')->middleware('auth:api');
+Route::post('/admin/photos/upload', 'API\Admin\PhotosController@upload');
+Route::apiResource('/admin/photos', 'API\Admin\PhotosController')->middleware('auth:api');
