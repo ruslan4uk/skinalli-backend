@@ -114,6 +114,16 @@ class PhotosController extends Controller
             ], 200);
         }
 
+        $request->validate([
+            'name' => 'required',
+            'about' => 'required',
+            'photo_path' => 'required',
+            'photo_tags.*' => 'required',
+            'photo_category.*' => 'required',
+            'keywords' => 'required',
+            'description' => 'required'
+        ]);
+
         $photo = Photo::with('photoCategory')
                     ->with('photoTag')
                     ->findOrFail($id);
