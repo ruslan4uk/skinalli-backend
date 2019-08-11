@@ -134,7 +134,7 @@ class PhotosController extends Controller
                     ->findOrFail($id);
 
         $photo->slug = null;
-        $photo->update($request->only('name', 'slug', 'about', 'active', 'keywords', 'description'));
+        $photo->update($request->only('name', 'slug', 'about', 'active', 'keywords', 'description', 'name_photo'));
 
         $photo->photoTag()->detach();
 
