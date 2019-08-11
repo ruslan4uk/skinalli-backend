@@ -22,6 +22,11 @@ class CreatePhotosTable extends Migration
             $table->text('image_path')->nullable();
             $table->text('image_preview_path')->nullable();
             $table->text('image_lazy')->nullable();
+
+            $table->text('image_path_webp')->nullable();
+            $table->text('image_preview_path_webp')->nullable();
+            $table->text('image_lazy_webp')->nullable();
+
             $table->boolean('active')->nullable();
             $table->string('keywords')->nullable();
             $table->string('description')->nullable();
