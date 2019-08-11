@@ -166,6 +166,10 @@ class PhotosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroy = Photo::destroy($id);
+        $storage = Storage::disk('s3')->deleteDirectory('skinali/' . $id);
+        return response()->json([
+            
+        ], 200);
     }
 }

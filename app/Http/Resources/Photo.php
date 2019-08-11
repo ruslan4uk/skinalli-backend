@@ -26,6 +26,7 @@ class Photo extends JsonResource
             'photo_tags' => $this->photoTag->pluck('name'),
             'image_path' => $this->image_path,
             'image_preview_path' => $this->image_preview_path,
+            'image_lazy' => $this->image_lazy,
         ];
     }
 }
