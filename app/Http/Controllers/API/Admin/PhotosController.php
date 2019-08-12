@@ -44,6 +44,7 @@ class PhotosController extends Controller
         // use imagick configuration
         Image::configure(array('driver' => 'imagick'));
 
+        // create image
         $skinali = Image::make($request->file('file'))
                 ->resize(1200, null, function ($constraint) { $constraint->aspectRatio(); } )
                 ->encode('jpg', 100);
