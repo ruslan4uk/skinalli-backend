@@ -6,11 +6,12 @@
         "framework",
         "laravel"
     ],
-    
+
     "license": "MIT",
     "require": {
         "php": "^7.2.18",
         "ext-gd": "*",
+        "ext-imagick": "*",
         "barryvdh/laravel-cors": "^0.11.3",
         "cviebrock/eloquent-sluggable": "^4.8",
         "fideloper/proxy": "^4.0",
