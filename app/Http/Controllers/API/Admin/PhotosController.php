@@ -79,9 +79,9 @@ class PhotosController extends Controller
 
         $photo = Photo::where('id', $request->get('id'))->firstOrFail();
 
-        $photo->image_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali);
-        $photo->image_preview_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_preview);
-        $photo->image_lazy = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_lazy);
+        $photo->image_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali);
+        $photo->image_preview_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali_preview);
+        $photo->image_lazy = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali_lazy);
 
         // webp save
         $photo->image_path_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_webp);
