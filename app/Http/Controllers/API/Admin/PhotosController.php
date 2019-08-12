@@ -41,6 +41,9 @@ class PhotosController extends Controller
 
         $save_path = 'skinali/'. $request->get('id');
             
+        // use imagick configuration
+        Image::configure(array('driver' => 'imagick'));
+
         $skinali = Image::make($request->file('file'))
                 ->resize(1200, null, function ($constraint) { $constraint->aspectRatio(); } )
                 ->encode('jpg', 100);
