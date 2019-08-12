@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "~7.2.18",
         "ext-gd": "*",
         "ext-imagick": "*",
         "barryvdh/laravel-cors": "^0.11.3",
