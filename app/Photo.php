@@ -25,6 +25,7 @@ class Photo extends Model
 
     protected $casts = [
         'active' => 'boolean',
+        'properties' => 'json',
     ];
 
     /**
