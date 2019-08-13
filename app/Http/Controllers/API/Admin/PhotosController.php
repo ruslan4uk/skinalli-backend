@@ -42,9 +42,21 @@ class PhotosController extends Controller
         $save_path = 'skinali/'. $request->get('id');
             
         // use imagick configuration
-        Image::configure(array('driver' => 'imagick'));
+        // Image::configure(array('driver' => 'imagick'));
+        
+        $photo = Photo::where('id', $request->get('id'))->firstOrFail();
 
-        // create image
+        // Original
+        $original = Image::make($request->file('file'))->encode('jpg', 100);
+        Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '-original.jpg', $original);
+        $photo->properties = [
+            'images' => [
+                'original' => Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $original)
+            ]
+        ];
+        
+
+        // create resize image
         $skinali = Image::make($request->file('file'))
                 ->resize(1200, null, function ($constraint) { $constraint->aspectRatio(); } )
                 ->encode('jpg', 100);
@@ -62,32 +74,31 @@ class PhotosController extends Controller
         Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_lazy.jpg', $skinali_lazy);
 
         // WEBP Resize
-        $skinali_webp = Image::make($request->file('file'))
-                ->resize(1200, null, function ($constraint) { $constraint->aspectRatio(); } )
-                ->encode('webp', 100);
+        // $skinali_webp = Image::make($request->file('file'))
+        //         ->resize(1200, null, function ($constraint) { $constraint->aspectRatio(); } )
+        //         ->encode('webp', 100);
 
-        $skinali_preview_webp = Image::make($request->file('file'))
-                ->resize(600, null, function ($constraint) { $constraint->aspectRatio(); } )
-                ->encode('webp', 90);
+        // $skinali_preview_webp = Image::make($request->file('file'))
+        //         ->resize(600, null, function ($constraint) { $constraint->aspectRatio(); } )
+        //         ->encode('webp', 90);
 
-        $skinali_lazy_webp = Image::make($request->file('file'))
-                ->resize(20, null, function ($constraint) { $constraint->aspectRatio(); } )
-                ->encode('webp', 90);
+        // $skinali_lazy_webp = Image::make($request->file('file'))
+        //         ->resize(20, null, function ($constraint) { $constraint->aspectRatio(); } )
+        //         ->encode('webp', 90);
 
-        Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_webp);
-        Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_preview.webp', $skinali_preview_webp);
-        Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_lazy.webp', $skinali_lazy_webp);
+        // Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_webp);
+        // Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_preview.webp', $skinali_preview_webp);
+        // Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '_lazy.webp', $skinali_lazy_webp);
 
-        $photo = Photo::where('id', $request->get('id'))->firstOrFail();
 
         $photo->image_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali);
         $photo->image_preview_path = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali_preview);
         $photo->image_lazy = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $skinali_lazy);
 
         // webp save
-        $photo->image_path_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_webp);
-        $photo->image_preview_path_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_preview_webp);
-        $photo->image_lazy_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_lazy_webp);
+        // $photo->image_path_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_webp);
+        // $photo->image_preview_path_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_preview_webp);
+        // $photo->image_lazy_webp = Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.webp', $skinali_lazy_webp);
         $photo->save();
         return response()->json([
             'success' => true,

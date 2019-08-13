@@ -19,7 +19,8 @@ class Photo extends Model
         'image_preview_path', 
         'active', 
         'keywords',
-        'description'
+        'description',
+        'properties'
     ];
 
     protected $casts = [
