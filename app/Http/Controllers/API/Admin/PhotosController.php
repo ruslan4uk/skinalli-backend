@@ -162,8 +162,8 @@ class PhotosController extends Controller
             'about' => 'required',
             'photo_tags.*' => 'required',
             'photo_category.*' => 'required',
-            'keywords' => 'required',
-            'description' => 'required'
+            // 'keywords' => 'required',
+            // 'description' => 'required'
         ]);
 
         $photo = Photo::with('photoCategory')
