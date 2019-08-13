@@ -51,7 +51,7 @@ class PhotosController extends Controller
         Storage::disk('s3')->put($save_path . '/skinali-' . $request->get('id') . '-original.jpg', $original);
         $photo->properties = [
             'images' => [
-                'original' => Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '.jpg', $original)
+                'original' => Storage::disk('s3')->url($save_path . '/skinali-' . $request->get('id') . '-original.jpg', $original)
             ]
         ];
         
