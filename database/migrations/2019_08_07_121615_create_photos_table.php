@@ -18,6 +18,7 @@ class CreatePhotosTable extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->string('name_photo')->nullable();
+            $table->json('color')->nullable();
             $table->string('about')->nullable();
             $table->text('image_path')->nullable();
             $table->text('image_preview_path')->nullable();

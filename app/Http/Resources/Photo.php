@@ -19,6 +19,7 @@ class Photo extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
             'name_photo' => $this->name_photo,
+            'color' => $this->color,
             'about' => $this->about,
             'keywords' => $this->keywords,
             'description' => $this->description,

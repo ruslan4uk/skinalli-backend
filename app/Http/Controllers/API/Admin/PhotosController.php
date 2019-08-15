@@ -159,6 +159,7 @@ class PhotosController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'color' => 'required',
             'about' => 'required',
             'photo_tags.*' => 'required',
             'photo_category.*' => 'required',
@@ -171,7 +172,7 @@ class PhotosController extends Controller
                     ->findOrFail($id);
 
         $photo->slug = null;
-        $photo->update($request->only('name', 'slug', 'about', 'active', 'keywords', 'description', 'name_photo'));
+        $photo->update($request->only('name', 'slug', 'color', 'about', 'active', 'keywords', 'description', 'name_photo'));
 
         $photo->photoTag()->detach();
 

@@ -14,6 +14,7 @@ class Photo extends Model
     protected $fillable = [
         'name', 
         'name_photo', 
+        'color',
         'about', 
         'image_path', 
         'image_preview_path', 
@@ -25,6 +26,7 @@ class Photo extends Model
 
     protected $casts = [
         'active' => 'boolean',
+        'color' => 'json',
         'properties' => 'json',
     ];
 
