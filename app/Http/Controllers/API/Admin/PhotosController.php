@@ -163,6 +163,7 @@ class PhotosController extends Controller
             'about' => 'required',
             'photo_tags.*' => 'required',
             'photo_category.*' => 'required',
+            'name_photo' => 'required',
             // 'keywords' => 'required',
             // 'description' => 'required'
         ]);
