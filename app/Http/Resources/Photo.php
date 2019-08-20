@@ -33,6 +33,9 @@ class Photo extends JsonResource
             'image_path_webp' => $this->image_path_webp,
             'image_preview_path_webp' => $this->image_preview_path_webp,
             'image_lazy_webp' => $this->image_lazy_webp,
+
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }
