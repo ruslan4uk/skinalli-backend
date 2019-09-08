@@ -18,9 +18,16 @@ class HomeController extends Controller
             ->whereHas('photoCategory', function($q) use($request) {
                 !$request->get('subcatalog') ?: $q->where('slug', '=', $request->get('subcatalog'));
             })
-            ->whereYear('created_at', '=', $request->get('year') ?: null)
-            ->whereMonth('created_at', '=', $request->get('month') ?: null)
-            ->where('color', 'LIKE', '%' . $request->get('color') . '%')
+            ->newQuery();
+
+        if($request->get('year')) {
+            $photo->whereYear('created_at', '=', $request->get('year'));
+        }
+        if($request->get('month')) {
+            $photo->whereMonth('created_at', '=', $request->get('month'));
+        }
+        
+        $photo->where('color', 'LIKE', '%' . $request->get('color') . '%')
             ->orderBy('created_at', $request->get('sort') === 'asc' ? 'asc' : 'desc')
             ->paginate(8);
 
