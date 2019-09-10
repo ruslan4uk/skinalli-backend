@@ -9,8 +9,12 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Регистрируем юзера
+     */
     public function register(Request $request) {
-        
+
         $validatedData = $request->validate([
             'name'=>'required|max:55',
             'email'=>'email|required|unique:users',
@@ -19,12 +23,13 @@ class AuthController extends Controller
 
         $validatedData['password'] = bcrypt($request->password);
 
+        /** @var User  $user */
         $user = User::create($validatedData);
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
         return response()->json([
-            'user'=> $user, 
+            'user'=> $user,
             'access_token'=> $accessToken
         ], 200);
 
@@ -36,7 +41,7 @@ class AuthController extends Controller
             'email' => 'email|required',
             'password' => 'required'
         ]);
-       
+
         if(!auth()->attempt($loginData)) {
             return response()->json([
                 'message'=>'Invalid credentials',
@@ -50,10 +55,11 @@ class AuthController extends Controller
         $accessToken = Auth::user()->createToken('authToken')->accessToken;
 
         return response()->json([
-            'user' => auth()->user(), 
+            'user' => auth()->user(),
             'access_token' => $accessToken
         ], 200);
     }
+
 
     public function user() {
         return response()->json([
@@ -61,11 +67,14 @@ class AuthController extends Controller
         ], 200);
     }
 
+    /**
+     * Убиваем токен
+     */
     public function logout() {
         if(Auth::check()) {
             Auth::user()->token()->revoke();
             return response()->json([
-
+                'status' => true,
             ], 200);
         }
     }
